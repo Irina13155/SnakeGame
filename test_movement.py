@@ -1,4 +1,6 @@
 import tkinter as tk
+import threading
+import time
 
 
 class Rectangle:
@@ -9,7 +11,8 @@ class Rectangle:
         self.canvas.pack()
         x1, y1 = self.width_w//2, self.height_w//2
         self.c1 = self.canvas.create_rectangle(x1, y1, x1 + 10, y1 + 10, fill='black')
-        self.status = True
+        self.game = True
+        self.direction = "Left"
         root.bind_all("<Key>", self.keypress)
 
     def get_position(self):
@@ -17,30 +20,46 @@ class Rectangle:
 
     def check_collision(self):
         coords = self.get_position()
-        if coords[0] < 0 or coords[1] < 0 or coords[2] > self.width_w or coords[3] > self.height_w:
+        if coords[0] < 1 or coords[1] < 1 or coords[2] > self.width_w-1 or coords[3] > self.height_w-1:
             self.canvas.delete(self.c1)
-            self.status = False
+            self.game = False
             self.canvas.create_text(300, 200, text='You Lose! Game Over!')
 
-    def keypress(self, event):
-        if self.status is True:
-            x = 0
-            y = 0
-            if event.char == "a":
-                x = -10
-            elif event.char == "d":
-                x = 10
-            elif event.char == "w":
-                y = -10
-            elif event.char == "s":
-                y = 10
-            self.canvas.move(self.c1, x, y)
+    def move(self):
+        coords = self.get_position()
+        while self.game is True:
+            if self.direction == "Left":
+                self.canvas.move(self.c1, - 10, 0)
+            elif self.direction == "Right":
+                self.canvas.move(self.c1, + 10, 0)
+            elif self.direction == "Up":
+                self.canvas.move(self.c1, 0, +10)
+            elif self.direction == "Down":
+                self.canvas.move(self.c1, 0, -10)
+
+            time.sleep(0.5)
+            coords = self.get_position()
             self.check_collision()
+
+    def keypress(self, event):
+
+        if self.game is True:
+            if event.char == "a":
+                self.direction = "Left"
+            elif event.char == "d":
+                self.direction = "Right"
+            elif event.char == "w":
+                self.direction = "Up"
+            elif event.char == "s":
+                self.direction = "Down"
+
 
 
 if __name__ == '__main__':
     root = tk.Tk()
     rectangle = Rectangle(root)
+    x = threading.Thread(target=rectangle.move)
+    x.start()
     root.mainloop()
 
 
