@@ -28,6 +28,7 @@ class Snake:
         self.height_w = height_w
         head = self.canvas.create_rectangle(self.width_w/10, self.height_w/10, self.width_w/10 + 10, self.height_w/10 + 10, fill='green')
         self.direction = "Left"
+        self.eating_food = False
         self.snake_body = [head]
 
     def get_head_position(self):
@@ -39,51 +40,26 @@ class Snake:
     def kill_snake(self):
         self.canvas.delete(tk.ALL)
 
-    def create_block(self, x, y):
-        block = self.canvas.create_rectangle(x, y, x + 10, y + 10, fill='white')
-        self.snake_body.append(block)
-
-    def draw_body(self):
-        coords = self.get_position(self.snake_body[-1])
-        x, y = 0, 0
-        if self.direction == "Left":
-            x = coords[2]
-            y = coords[1]
-        elif self.direction == "Right":
-            x = coords[0]-10
-            y = coords[1]
-        elif self.direction == "Up":
-            x = coords[0]
-            y = coords[3]
-        elif self.direction == "Down":
-            x = coords[0]
-            y = coords[1]-10
-
-        self.create_block(x, y)
-
     def create_head(self):
+        vector_direction = {
+            "Left": [-10, 0],
+            "Right": [10, 0],
+            "Up": [0, -10],
+            "Down": [0, 10]
+        }
         coords = self.get_head_position()
-        x, y = 0, 0
-        if self.direction == "Left":
-            x = coords[0] - 10
-            y = coords[1]
-        elif self.direction == "Right":
-            x = coords[2]
-            y = coords[1]
-        elif self.direction == "Up":
-            x = coords[0]
-            y = coords[1] - 10
-        elif self.direction == "Down":
-            x = coords[0]
-            y = coords[3]
-
+        x = vector_direction[self.direction][0] + coords[0]
+        y = vector_direction[self.direction][1] + coords[1]
         head = self.canvas.create_rectangle(x, y, x + 10, y + 10, fill='green')
         self.snake_body.insert(0, head)
 
     def step(self):
         self.create_head()
-        self.canvas.delete(self.snake_body[-1])
-        self.snake_body.pop(-1)
+        if self.eating_food is False:
+            self.canvas.delete(self.snake_body[-1])
+            self.snake_body.pop(-1)
+        else:
+            self.eating_food = False
 
         if len(self.snake_body) > 1:
             coords = self.get_position(self.snake_body[1])
@@ -96,9 +72,7 @@ class Snake:
             for block in self.snake_body[3:-1]:
                 coords_block = self.get_position(block)
                 if coords[0] == coords_block[0] and \
-                    coords[1] == coords_block[1] and \
-                    coords[2] == coords_block[2] and \
-                    coords[3] == coords_block[3]:
+                    coords[1] == coords_block[1]:
                     print(coords)
                     print(coords_block)
                     return True
@@ -147,7 +121,7 @@ class Model:
         coord_snake = self.snake.get_head_position()
         if [coord_food[0], coord_food[1]] == [coord_snake[0], coord_snake[1]]:
             self.score += 1
-            self.snake.draw_body()
+            self.snake.eating_food = True
             self.canvas.delete(self.food.nutrition)
             self.food.nutrition = self.food.create_food()
 
