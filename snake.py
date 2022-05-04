@@ -1,3 +1,12 @@
+from enum import Enum
+
+
+class Direction(Enum):
+    LEFT = (-10, 0)
+    RIGHT = (10, 0)
+    UP = (0, -10)
+    DOWN = (0, 10)
+
 
 class Snake:
     def __init__(self, canvas, width_w, height_w):
@@ -5,7 +14,7 @@ class Snake:
         self.width_w = width_w
         self.height_w = height_w
         head = self.canvas.create_rectangle(self.width_w/10, self.height_w/10, self.width_w/10 + 10, self.height_w/10 + 10, fill='green')
-        self.direction = "Left"
+        self.direction = Direction.LEFT
         self.eating_food = False
         self.snake_body = [head]
 
@@ -20,15 +29,10 @@ class Snake:
             self.canvas.delete(block)
 
     def create_head(self):
-        vector_direction = {
-            "Left": [-10, 0],
-            "Right": [10, 0],
-            "Up": [0, -10],
-            "Down": [0, 10]
-        }
+
         coords = self.get_head_position()
-        x = vector_direction[self.direction][0] + coords[0]
-        y = vector_direction[self.direction][1] + coords[1]
+        x = self.direction.value[0] + coords[0]
+        y = self.direction.value[1] + coords[1]
         head = self.canvas.create_rectangle(x, y, x + 10, y + 10, fill='green')
         self.snake_body.insert(0, head)
 

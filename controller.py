@@ -1,3 +1,7 @@
+from snake import Direction
+from model import Model
+
+
 class Controller:
 
     def __init__(self, root):
@@ -7,10 +11,10 @@ class Controller:
     def keypress(self, event):
         if self.model.game is True:
             if event.char == "a":
-                self.model.snake.direction = "Left"
+                self.model.snake.direction = Direction.LEFT
             elif event.char == "d":
-                self.model.snake.direction = "Right"
+                self.model.snake.direction = Direction.RIGHT
             elif event.char == "w":
-                self.model.snake.direction = "Up"
+                self.model.snake.direction = Direction.UP
             elif event.char == "s":
-                self.model.snake.direction = "Down"
+                self.model.snake.direction = Direction.DOWN
