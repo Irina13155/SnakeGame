@@ -29,7 +29,6 @@ class Snake:
             self.canvas.delete(block)
 
     def create_head(self):
-
         coords = self.get_head_position()
         x = self.direction.value[0] + coords[0]
         y = self.direction.value[1] + coords[1]

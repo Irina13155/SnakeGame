@@ -5,7 +5,6 @@ from food import Food
 from snake import Snake
 
 
-
 class Model:
     canvas = None
     width_w = 400

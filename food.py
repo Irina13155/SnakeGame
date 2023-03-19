@@ -11,7 +11,6 @@ class Food:
     def create_object(self):
         x = random.randrange(2, self.width_w // 10 - 10) * 10
         y = random.randrange(2, self.height_w // 10 - 10) * 10
-        print(x, y)
         return self.canvas.create_rectangle(x, y, x + 10, y + 10, fill='red')
 
     def get_position(self):
