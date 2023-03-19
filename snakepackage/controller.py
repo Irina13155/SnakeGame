@@ -1,5 +1,5 @@
-from snake import Direction
-from model import Model
+from .snake import Direction
+from .model import Model
 
 
 class Controller:
