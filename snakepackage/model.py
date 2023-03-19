@@ -1,8 +1,8 @@
 import tkinter as tk
 import time
 import threading
-from food import Food
-from snake import Snake
+from .food import Food
+from .snake import Snake
 
 
 class Model:
