@@ -13,7 +13,10 @@ class Snake:
         self.canvas = canvas
         self.width_w = width_w
         self.height_w = height_w
-        head = self.canvas.create_rectangle(self.width_w/10, self.height_w/10, self.width_w/10 + 10, self.height_w/10 + 10, fill='green')
+        head = self.canvas.create_rectangle(
+            self.width_w/10, self.height_w/10, self.width_w/10 + 10, self.height_w/10 + 10,
+            fill='green'
+        )
         self.direction = Direction.LEFT
         self.eating_food = False
         self.snake_body = [head]
@@ -46,7 +49,9 @@ class Snake:
         if len(self.snake_body) > 1:
             coords = self.get_position(self.snake_body[1])
             self.canvas.delete(self.snake_body[1])
-            self.snake_body[1] = self.canvas.create_rectangle(coords[0], coords[1], coords[2], coords[3], fill='white')
+            self.snake_body[1] = self.canvas.create_rectangle(
+                coords[0], coords[1], coords[2], coords[3], fill='white'
+            )
 
     def check_biting(self):
         coords = self.get_head_position()
@@ -54,7 +59,7 @@ class Snake:
             for block in self.snake_body[3:-1]:
                 coords_block = self.get_position(block)
                 if coords[0] == coords_block[0] and \
-                    coords[1] == coords_block[1]:
+                   coords[1] == coords_block[1]:
                     print(coords)
                     print(coords_block)
                     return True
