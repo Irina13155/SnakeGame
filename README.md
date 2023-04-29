@@ -1,3 +1,5 @@
+![example workflow](https://github.com/Irina13155/SnakeGame/actions/workflows/pycheck.yml/badge.svg)
+
 #SnakeGame
 This is a Python Snake game, that we all used to play.
 
