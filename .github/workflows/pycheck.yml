@@ -10,11 +10,13 @@ jobs:
     runs-on: windows-latest
 
     steps:
+    - name: Setup Python
+      uses: actions/setup-python@v2
+    - name: Checkout Git repository
+      uses: actions/checkout@v3
+
     - name: Run flake8
-    - uses: actions/checkout@v3
-    - uses: Irina13155/flake8-check-action@master
+      uses: py-actions/flake8@v2
       with:
-        flake8: true
         path: snakepackage
-        repotoken: ${{ secrets.GITHUB_TOKEN }}
-        maxlinelength: 100
+        max-line-length: 100
