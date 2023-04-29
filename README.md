@@ -1,11 +1,12 @@
-![example workflow](https://github.com/Irina13155/SnakeGame/actions/workflows/pycheck.yml/badge.svg)
+![flake8](https://github.com/Irina13155/SnakeGame/actions/workflows/pycheck.yml/badge.svg)
 
-#SnakeGame
+# SnakeGame
+
 This is a Python Snake game, that we all used to play.
 
 Project uses built-in packages only (tkinter, threading).
 
-###Run SnakeGame with python
+## Run SnakeGame with python
 
 If you don't have `setuptools`, please install it:
 
@@ -22,6 +23,7 @@ And now you can run the game:
 `python -m snakepackage`
 
 
-###How to play
+## How to play
+
 Snakebody is controlled by _w a s d_ keys.
 
